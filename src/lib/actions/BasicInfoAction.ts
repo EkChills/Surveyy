@@ -6,10 +6,8 @@ import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
 import { z } from "zod";
+import { BasicinfoSchema } from "../validation/zod-schemas";
 
-const BasicinfoSchema = z.object({
-    jobTitle:z.string()
-  })
 
 export const addBasicInfo = async(prevState:{message:string | null}, formData:FormData) => {
     console.log(formData);

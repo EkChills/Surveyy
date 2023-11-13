@@ -49,3 +49,9 @@
     --ring: 224.3 76.3% 48%;
   }
 }
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  
+}

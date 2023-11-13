@@ -7,11 +7,15 @@ await import("./src/env.mjs");
 /** @type {import("next").NextConfig} */
 const config = {
     images:{
-        domains:['utfs.io']
+        remotePatterns:[
+            {
+                protocol:'https',
+                hostname:'utfs.io'
+            }
+        ]
+
     },
-    experimental:{
-        serverActions:true
-    }
+   
 };
 
 export default config;

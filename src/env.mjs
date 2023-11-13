@@ -19,7 +19,8 @@ export const env = createEnv({
       KINDE_POST_LOGOUT_REDIRECT_URL:z.string(),
       KINDE_POST_LOGIN_REDIRECT_URL:z.string(),
       UPLOADTHING_SECRET:z.string(),
-      UPLOADTHING_APP_ID:z.string()
+      UPLOADTHING_APP_ID:z.string(),
+      OPENAI_API_KEY:z.string(),
     },
     
     /**
@@ -46,6 +47,7 @@ export const env = createEnv({
     KINDE_SITE_URL:process.env.KINDE_SITE_URL,
     UPLOADTHING_SECRET:process.env.UPLOADTHING_SECRET,
     UPLOADTHING_APP_ID:process.env. UPLOADTHING_APP_ID,
+    OPENAI_API_KEY:process.env.OPENAI_API_KEY
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

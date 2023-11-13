@@ -11,8 +11,8 @@ import UploadImageButton from "./UploadImageButton";
 import { z } from "zod";
 import { db } from "@/server/db";
 import { user } from "@/server/db/schema";
-import { addBasicInfo } from "@/lib/BasicInfoAction";
-import { experimental_useFormState as useFormState, useFormStatus } from 'react-dom'
+import { addBasicInfo } from "@/lib/actions/BasicInfoAction";
+import { useFormState, useFormStatus } from 'react-dom'
 import { cn } from "@/lib/utils";
 
 export const BasicinfoSchema = z.object({
@@ -24,11 +24,22 @@ const initialState = {
 }
 
 export type BasicinfoType = z.infer<typeof BasicinfoSchema>
+
+const SubmitButton = () => {
+  const {pending} = useFormStatus()
+  
+  return (
+  <Button type="submit" size={"lg"} aria-disabled={pending} className={cn('mt-6 font-semibold', pending && 'brightness-150')}>
+    Continue
+  </Button>
+  )
+}
 export default function BasicInfoForm() {
   const [jobTitleText, setJobTitleText] = useState<string>('')
   
   const [state, formAction] = useFormState(addBasicInfo, initialState)
-  const {pending} = useFormStatus()
+  
+
   
 
   return (
@@ -64,9 +75,7 @@ export default function BasicInfoForm() {
           </div>
         </div>
       </div>
-      <Button size={"lg"} className={cn('mt-6 font-semibold', pending && 'brightness-150')}>
-        Continue
-      </Button>
+      <SubmitButton />
     </form>
   );
 }
