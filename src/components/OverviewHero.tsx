@@ -2,12 +2,12 @@ import { db } from "@/server/db"
 import { surveys } from "@/server/db/schema"
 import CopyLink from "./CopyLink"
 import { eq } from "drizzle-orm"
-import { cn } from "@/lib/utils"
+import { baseUrl, cn } from "@/lib/utils"
 import { buttonVariants } from "./ui/button"
 
 export async function OverviewHero({surveyId}:{surveyId:string}) {
     const surveyTitle = await db.select().from(surveys).where(eq(surveys.id, surveyId))
-    const copyUrl = `http://localhost:3000/survey/${surveyId}`
+    const copyUrl = `${baseUrl}/survey/${surveyId}`
     return (
         <>
         <span className='p-2 rounded-xl bg-[#EEFBE4] font-semibold text-sm text-[#5F843A]'>Active</span>
