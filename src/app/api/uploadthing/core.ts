@@ -26,7 +26,9 @@ export const ourFileRouter = {
     .onUploadComplete(async ({ metadata, file }) => {
       // This code RUNS ON YOUR SERVER after upload
       console.log("Upload complete for userId:", metadata.userId);
-      const updatedUser = await db.update(user).set({ picture: file.url }).where(eq(user.id, metadata.userId!));
+      const updatedUser = await db.update(user)
+      .set({ picture: file.url })
+      .where(eq(user.id, metadata.userId!));
       console.log(updatedUser);
       
  
