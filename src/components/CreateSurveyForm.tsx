@@ -1,6 +1,6 @@
 "use client"
 
-import React,{useEffect} from 'react'
+import React,{useEffect, useState} from 'react'
 import { Label } from './ui/label'
 import { Input } from './ui/input'
 import { Textarea } from './ui/textarea'
@@ -14,23 +14,28 @@ import CreateSurveyButton from './CreateSurveyButton'
 export default function CreateSurveyForm() {
     const searchParams = useSearchParams()
     const [state, formAction] = useFormState(createSurveyAction, initialSurveyState)
+    const [formInputs, setFormInputs] = useState<{name:string; desc:string; noq:string;}>({desc:'', name:'', noq:''})
     const pathname = usePathname()
     const router = useRouter()
 
     function handleChange(e:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
-        const params = new URLSearchParams(searchParams)
-        if(e.target.name === 'name' ) {
-            params.set('name', e.target.value)
-        } 
-        if(e.target.name === 'noq') {
-            params.set('noq', e.target.value)
-        }
-        if(e.target.name === 'desc') {
-            params.set('desc', e.target.value)
-        }
-        router.replace(`${pathname}?${params.toString()}`)
+        // const params = new URLSearchParams(searchParams)
+        // if(e.target.name === 'name' ) {
+        //     params.set('name', e.target.value)
+        // } 
+        // if(e.target.name === 'noq') {
+        //     params.set('noq', e.target.value)
+        // }
+        // if(e.target.name === 'desc') {
+        //     params.set('desc', e.target.value)
+        // }
+        // router.replace(`${pathname}?${params.toString()}`)
+      const {name, value} = e.target
+      setFormInputs((prevInputs) => {
+        return {...prevInputs, [name]:value}
+      })
     }
-    console.log(state);
+    console.log(state, formInputs);
 
     useEffect(() => {
       if(state.success) {
@@ -53,6 +58,7 @@ export default function CreateSurveyForm() {
         type="text"
         id="name"
         name='name'
+        value={formInputs.name}
         className="border-2 font-semibold text-[#0D1625] shadow-sm"
         placeholder="Eg. User experience survey"
         onChange={handleChange}
@@ -69,6 +75,7 @@ export default function CreateSurveyForm() {
         placeholder="Eg. a social media website that focuses on sharing images related to product design"
         id="desc"
         name='desc'
+        value={formInputs.desc}
         onChange={handleChange}
       />
           {state.desc?.error && <span className='text-sm text-red-700'>{state.desc.message}</span>}
@@ -83,6 +90,7 @@ export default function CreateSurveyForm() {
         id="noq"
         className="border-2 font-semibold text-[#0D1625] shadow-sm"
         placeholder="Eg. 10"
+        value={formInputs.noq}
         name='noq'
         min={0}
         max={5}
