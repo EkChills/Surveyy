@@ -37,11 +37,11 @@ export default function CreateSurveyForm() {
     }
     console.log(state, formInputs);
 
-    // useEffect(() => {
-    //   if(state.success) {
-    //     router.push(`/dashboard/overview/${state.surveyId}`)
-    //   }
-    // },[state])
+    useEffect(() => {
+      if(state.success) {
+        router.push(`/dashboard/overview/${state.surveyId}`)
+      }
+    },[state.success, state.surveyId])
     
     
   return (

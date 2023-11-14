@@ -9,7 +9,7 @@ import UploadImageButton from "./UploadImageButton";
 import { z } from "zod";
 
 import { addBasicInfo } from "@/lib/actions/BasicInfoAction";
-import { useFormState, useFormStatus } from 'react-dom'
+import { experimental_useFormState as useFormState, experimental_useFormStatus as useFormStatus } from 'react-dom'
 import { cn } from "@/lib/utils";
 
 export const BasicinfoSchema = z.object({
