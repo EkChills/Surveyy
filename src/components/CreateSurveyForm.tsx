@@ -16,7 +16,7 @@ export default function CreateSurveyForm() {
     const [state, formAction] = useFormState(createSurveyAction, initialSurveyState)
     const [formInputs, setFormInputs] = useState<{name:string; desc:string; noq:string;}>({desc:'', name:'', noq:''})
     const pathname = usePathname()
-    const router = useRouter()
+    // const router = useRouter()
 
     function handleChange(e:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
         // const params = new URLSearchParams(searchParams)
@@ -37,11 +37,11 @@ export default function CreateSurveyForm() {
     }
     console.log(state, formInputs);
 
-    useEffect(() => {
-      if(state.success) {
-        router.push(`/dashboard/overview/${state.surveyId}`)
-      }
-    },[state.success, state.surveyId])
+    // useEffect(() => {
+    //   if(state.success) {
+    //     router.push(`/dashboard/overview/${state.surveyId}`)
+    //   }
+    // },[state.success, state.surveyId])
     
     
   return (
