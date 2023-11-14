@@ -1,8 +1,5 @@
 import { openai } from "@/lib/openai";
 import { SurveyResultsSchema,type SurveyResultsType,type createInputSchemaTypes, createSurveyInputSchema } from "@/lib/validation/zod-schemas";
-import { db } from "@/server/db";
-import { surveys } from "@/server/db/schema";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import {NextResponse, type NextRequest } from "next/server";
 import {v4 as uuid} from 'uuid'
 

@@ -4,9 +4,8 @@ import React,{useEffect} from 'react'
 import { Label } from './ui/label'
 import { Input } from './ui/input'
 import { Textarea } from './ui/textarea'
-import { Button } from './ui/button'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { useFormState } from 'react-dom'
+import { experimental_useFormState as useFormState } from 'react-dom'
 import {  createSurveyAction } from '@/lib/actions/createSurveyAction'
 import { initialSurveyState } from '@/lib/validation/zod-schemas'
 import CreateSurveyButton from './CreateSurveyButton'
@@ -37,7 +36,7 @@ export default function CreateSurveyForm() {
       if(state.success) {
         router.push(`/dashboard/overview/${state.surveyId}`)
       }
-    },[state.success])
+    },[state.success, state.surveyId, router])
     
     
   return (

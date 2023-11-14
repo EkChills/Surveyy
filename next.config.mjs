@@ -15,6 +15,9 @@ const config = {
         ]
 
     },
+    experimental:{
+        serverActions:true
+    }
    
 };
 

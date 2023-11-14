@@ -1,7 +1,7 @@
 import React from 'react'
-import { Card, CardContent } from './ui/card'
+import { Card } from './ui/card'
 import { cn } from '@/lib/utils'
-import { Button, buttonVariants } from './ui/button'
+import {  buttonVariants } from './ui/button'
 import { Rocket } from 'lucide-react'
 import Link from 'next/link'
 

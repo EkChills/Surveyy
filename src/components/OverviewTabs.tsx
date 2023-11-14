@@ -1,21 +1,12 @@
 import React, { Suspense } from 'react'
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-  } from "@/components/ui/card"
+
   import {
     Tabs,
     TabsContent,
     TabsList,
     TabsTrigger,
   } from "@/components/ui/tabs"
-import { Label } from './ui/label'
-import { Input } from './ui/input'
-import { Button } from './ui/button'
+
 import Overview from './Overview'
 
 export default function OverviewTabs({surveyId}:{surveyId:string}) {

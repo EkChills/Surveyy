@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState } from 'react'
-import Dropzone, { useDropzone } from 'react-dropzone';
+import  { useDropzone } from 'react-dropzone';
 import { Button } from './ui/button';
 import { Camera, Loader2 } from 'lucide-react';
 import { useUploadThing } from '@/lib/uploadthing';
@@ -13,7 +13,7 @@ export default function UploadImageButton() {
   const [imagePath, setImagePath] = useState<string>('')
   const {startUpload, isUploading} = useUploadThing("imageUploader", {})
     const { getRootProps, getInputProps } = useDropzone({onDrop:(acceptedFile) => {
-        const res = startUpload(acceptedFile).then((res) => {
+        startUpload(acceptedFile).then((res) => {
           if(res) {
             console.log(res);
             setImagePath(res[0]!.url)

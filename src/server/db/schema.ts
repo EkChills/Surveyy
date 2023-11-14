@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { pgTable, serial, text, timestamp, uuid, varchar, integer } from "drizzle-orm/pg-core";
+import { pgTable, text,  uuid, varchar, integer } from "drizzle-orm/pg-core";
  
 
 
@@ -43,7 +43,7 @@ export const surveyResultsRelations = relations(surveys, ({many}) => ({
   results:many(results)
 }))
 
-export const surveysRelations = relations(surveys, ({one, many}) => ({
+export const surveysRelations = relations(surveys, ({one,}) => ({
   user: one(user,{
     fields:[surveys.userId],
     references:[user.id],

@@ -4,13 +4,10 @@
 import React, { useState } from "react";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
-import { Camera } from "lucide-react";
 import { Button } from "./ui/button";
-import Dropzone from "react-dropzone";
 import UploadImageButton from "./UploadImageButton";
 import { z } from "zod";
-import { db } from "@/server/db";
-import { user } from "@/server/db/schema";
+
 import { addBasicInfo } from "@/lib/actions/BasicInfoAction";
 import { useFormState, useFormStatus } from 'react-dom'
 import { cn } from "@/lib/utils";
@@ -38,6 +35,7 @@ export default function BasicInfoForm() {
   const [jobTitleText, setJobTitleText] = useState<string>('')
   
   const [state, formAction] = useFormState(addBasicInfo, initialState)
+  console.log(state);
   
 
   

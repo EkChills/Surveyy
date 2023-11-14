@@ -5,7 +5,6 @@ import { user } from "@/server/db/schema";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
-import { z } from "zod";
 import { BasicinfoSchema } from "../validation/zod-schemas";
 
 

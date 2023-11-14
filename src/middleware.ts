@@ -13,4 +13,4 @@ export const config = {
     ]
 };
 
-export default authMiddleware
+export default authMiddleware;

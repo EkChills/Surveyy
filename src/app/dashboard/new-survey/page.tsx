@@ -1,11 +1,6 @@
 
 import CreateSurveyForm from "@/components/CreateSurveyForm";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { api } from "@/trpc/server";
 import React from "react";
 
 export default function NewSurvey() {

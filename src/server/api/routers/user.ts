@@ -1,5 +1,4 @@
-import { z } from "zod";
-import { createTRPCRouter, privateProcedure, publicProcedure } from "../trpc";
+import { createTRPCRouter, privateProcedure } from "../trpc";
 import { user } from "@/server/db/schema";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { eq } from "drizzle-orm";

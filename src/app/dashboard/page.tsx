@@ -2,7 +2,6 @@ import CardsWrapper from '@/components/CardsWrapper'
 import CreateSurvey from '@/components/CreateSurvey'
 import MaxWidthWrapper from '@/components/MaxWidthWrapper'
 import RecentsWrapper from '@/components/RecentsWrapper'
-import { Card, CardContent } from '@/components/ui/card'
 import React, { Suspense } from 'react'
 
 

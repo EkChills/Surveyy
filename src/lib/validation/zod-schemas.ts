@@ -1,5 +1,5 @@
 import {z} from 'zod'
-import { SurveyState } from '../actions/createSurveyAction'
+import { type SurveyState } from '../actions/createSurveyAction'
 
 export const BasicinfoSchema = z.object({
     jobTitle:z.string()

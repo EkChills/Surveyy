@@ -18,7 +18,7 @@ export default async function RecentSurveys() {
     <CardContent className='text-gray-500 font-semibold'>You havent received any surveys yet</CardContent>
     </Card> : <div className='flex flex-col gap-4 mt-2'>
     {allSurveys.map((survey) => {
-        const {description, name, id} = survey
+        const { name, id} = survey
         return <Card key={id} className='w-full p-8 flex flex-col gap-4 items-start'>
             <div className='flex w-full items-center justify-between'>
                 <h5 className='text-base font-semibold text-[#0D253D]'>{name}</h5>

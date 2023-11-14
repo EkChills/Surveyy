@@ -1,14 +1,11 @@
 "use server"
 
 import { ZodError } from "zod";
-import { CreateSurveySchema, SurveyResultsType, initialSurveyState } from "../validation/zod-schemas";
-import { api } from "@/trpc/server";
+import { CreateSurveySchema, type SurveyResultsType, initialSurveyState } from "../validation/zod-schemas";
 import { db } from "@/server/db";
 import { options, results, surveys } from "@/server/db/schema";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import axios from "axios";
-import { eq } from "drizzle-orm";
-import { redirect } from "next/navigation";
 import { v4 as uuid } from "uuid";
 
 
@@ -66,7 +63,7 @@ const createdSurveys = await createdSurveysPromise.data as SurveyResultsType
     // console.log(createdSurvey);
     
     
-    const createdTransactions = await db.transaction(async(tx) => {
+    await db.transaction(async(tx) => {
         const insertedResults = createdSurveys.results.map((surv) => {
             return {id:surv.id, questionText:surv.questionText}
         })
@@ -83,7 +80,7 @@ const createdSurveys = await createdSurveysPromise.data as SurveyResultsType
             id: string;
             answerText: string;
         }[]
-        const uniqueOptions = createdSurveys.results.map((result, idx) => {
+        createdSurveys.results.map((result, idx) => {
             const opts = result.options.map(op => ({...op,id:uuid(),resultId:allInsertedResults[idx]?.resultId}))
             allOptions = [...allOptions, ...opts]
             return {...result}

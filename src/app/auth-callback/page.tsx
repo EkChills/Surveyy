@@ -7,7 +7,7 @@ import React from 'react'
 
 export default function AuthCallback() {
   const router = useRouter()
-  const {data, isLoading, isSuccess, isError} = api.user.authCallback.useQuery(undefined, {
+  const {data, isSuccess, isError} = api.user.authCallback.useQuery(undefined, {
     retry:true,
     retryDelay:500
   })
