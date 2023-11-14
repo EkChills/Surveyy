@@ -25,12 +25,10 @@ export const ourFileRouter = {
     })
     .onUploadComplete(async ({ metadata, file }) => {
       // This code RUNS ON YOUR SERVER after upload
-      const {getUser} = getKindeServerSession()
-      const kindeUser = getUser()
       console.log("Upload complete for userId:", metadata.userId);
       const updatedUser = await db.update(user)
-      .set({ picture: file.url })
-      .where(eq(user.id, kindeUser.id!));
+      .set({ picture: 'this' })
+      .where(eq(user.id, metadata.userId!));
       console.log(updatedUser);
       
  
