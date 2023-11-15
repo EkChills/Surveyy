@@ -1,6 +1,9 @@
+import { baseUrl } from "@/lib/utils";
 import { db } from "@/server/db";
 import { user } from "@/server/db/schema";
+import { api } from "@/trpc/server";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import axios from "axios";
 import { eq } from "drizzle-orm";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
  
@@ -26,13 +29,19 @@ export const ourFileRouter = {
     .onUploadComplete(async ({ metadata, file }) => {
       // This code RUNS ON YOUR SERVER after upload
       console.log("Upload complete for userId:", metadata.userId);
-      const updatedUser = await db.update(user)
-      .set({ picture: file.url })
-      .where(eq(user.id, metadata.userId!));
-      console.log(updatedUser);
+      // const updatedUser = await db.update(user)
+      // .set({ picture: file.url })
+      // .where(eq(user.id, metadata.userId!));
+      // console.log(updatedUser);
       
  
       console.log("file url", file.url);
+      try {
+        await axios.post(`${baseUrl}/api/updateUserImg`, {imageUrl:file.url, userId:metadata.userId})
+      } catch (error) {
+        console.log(error);
+        
+      }
     }),
 } satisfies FileRouter;
  
