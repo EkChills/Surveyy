@@ -56,8 +56,8 @@ try {
 
 
 const createdSurveysPromise = await axios.post(`${baseUrl}/api/createSurvey`,{numberOfQuestions:validatedInputs.noq, surveyDescription:validatedInputs.desc, surveyName:validatedInputs.name} )
-const surv = await db.insert(surveys).values({description:validatedInputs.desc, name:validatedInputs.name, noq:validatedInputs.noq, userId:user.id}).returning({surveyId:surveys.id})
-const createdSurveys = await createdSurveysPromise.data as SurveyResultsType
+// const surv = await db.insert(surveys).values({description:validatedInputs.desc, name:validatedInputs.name, noq:validatedInputs.noq, userId:user.id}).returning({surveyId:surveys.id})
+// const createdSurveys = await createdSurveysPromise.data as SurveyResultsType
 
     // await api.survey.createSurvey.mutate({numberOfQuestions:validatedInputs.noq, surveyDescription:validatedInputs.desc, surveyName:validatedInputs.name})
     // const createdSurvey = await db.insert(surveys).values({name:validatedInputs.name, description:validatedInputs.desc, noq:validatedInputs.noq, userId:user.id})
@@ -99,7 +99,7 @@ const createdSurveys = await createdSurveysPromise.data as SurveyResultsType
     return {
         ...initialSurveyState,
         success:true,
-        surveyId:surv[0]?.surveyId
+        // surveyId:surv[0]?.surveyId
     }
 } catch (error) {
     console.log(error);
