@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "npx drizzle-kit generate:pg && next build",
+    "build": "next build",
     "db:push": "dotenv drizzle-kit push:pg",
     "db:studio": "dotenv drizzle-kit studio",
     "generate": "dotenv drizzle-kit generate:pg",
