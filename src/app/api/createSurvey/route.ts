@@ -4,7 +4,6 @@ import {NextResponse, type NextRequest } from "next/server";
 import {v4 as uuid} from 'uuid'
 
 export const maxDuration = 10; 
-export const runtime = 'edge'
 
 
 export async function POST (req:NextRequest) {
