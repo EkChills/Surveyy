@@ -3,14 +3,13 @@ import { SurveyResultsSchema,type SurveyResultsType,type createInputSchemaTypes,
 import {NextResponse, type NextRequest } from "next/server";
 import {v4 as uuid} from 'uuid'
 
-export const maxDuration = 10; 
 
 
 export async function POST (req:NextRequest) {
   console.log('triggered');
   
   const body = await req.json() as createInputSchemaTypes
-  // const surveyInputs = createSurveyInputSchema.parse({...body})
+  const surveyInputs = createSurveyInputSchema.parse({...body})
   try {
     const chatCompletion = await openai.chat.completions.create({
       messages: [
@@ -34,21 +33,21 @@ export async function POST (req:NextRequest) {
          {
           role: "user",
           content:
-            `{"surveyName":${body.surveyName}, "surveyDescription":${body.surveyDescription}, "numberOfQuestions":${body.numberOfQuestions}}`,
+            `{"surveyName":${surveyInputs.surveyName}, "surveyDescription":${surveyInputs.surveyDescription}, "numberOfQuestions":${surveyInputs.numberOfQuestions}}`,
         },
       ],
       model: "gpt-3.5-turbo",
-      temperature:0.2,
-      max_tokens:100,
+      temperature:1,
+      // max_tokens:100
     });
     if(!chatCompletion) {
       throw new Error('OpenAI API error');
     }
     const parsableJson = chatCompletion?.choices[0]!.message.content
     const parsed = JSON.parse(parsableJson!) as {results:SurveyResultsType[]};
-    // const validatedResults = SurveyResultsSchema.parse(parsed)
-    const uniqueResults = parsed.results.map((res) => ({...res, id:uuid()}))
-    console.log(uniqueResults);
+    const validatedResults = SurveyResultsSchema.parse(parsed)
+    const uniqueResults = validatedResults.results.map((res) => ({...res, id:uuid()}))
+    console.log(validatedResults);
     return NextResponse.json({results:uniqueResults})
     
 

@@ -8,6 +8,7 @@ import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import axios from "axios";
 import { v4 as uuid } from "uuid";
 import { baseUrl } from "../utils";
+import { openai } from "../openai";
 
 
 export type SurveyState = {
@@ -49,16 +50,53 @@ try {
     })
     console.log(validatedInputs);
     
-    // await new Promise((res) => setTimeout(() => res('hello'), 3000))
-//  
+    const chatCompletion = await openai.chat.completions.create({
+        messages: [
+          {
+            role: "system",
+            content:
+              `your sole role is to create surveys depending on the users input. the inputs are the name of the survey, description of the survey, and number of questions this is how the input will look like from the user: \n {
+                surveyName:'survey name from user',
+                surveyDescription:'survey description from user',
+                numberOfQuestions:'number of questions provided by the user'
+              } \n \n and you should reply with the survey questions with arrays  of the stringified questions like this: \n {results: [
+                {
+                    "id":"should be a random string id",
+                    "questionText":"question text",
+                    "options":[
+                        {"id":"random id", "answerText":"string of the option text"}
+                    ],
+                }
+              ] } \n the length of the results array can be more depending on the number of questions value from the user.  make sure the questions are exactly the number of questions provided by the user and when i run JSON.parse it must parse correctly. dont add any string literals that would cause this error to show  unterminated string literal at line 1 column 420 of the JSON data `,
+          },
+           {
+            role: "user",
+            content:
+              `{"surveyName":${validatedInputs.name}, "surveyDescription":${validatedInputs.desc}, "numberOfQuestions":${validatedInputs.noq}}`,
+          },
+        ],
+        model: "gpt-3.5-turbo",
+        temperature:1,
+      });
+      if(!chatCompletion) {
+        throw new Error('OpenAI API error');
+      }
+      const parsableJson = chatCompletion?.choices[0]!.message.content
+      console.log(parsableJson);
+      
+      const parsed = JSON.parse(parsableJson!) as {results:SurveyResultsType[]};
+      // const validatedResults = SurveyResultsSchema.parse(parsed)
+      const uniqueResults = parsed.results.map((res) => ({...res, id:uuid()}))
+      
 
 
-
-const createdSurveysPromise = await axios.post(`${baseUrl}/api/createSurvey`,{numberOfQuestions:validatedInputs.noq, surveyDescription:validatedInputs.desc, surveyName:validatedInputs.name} )
+// const createdSurveysPromise = await axios.post(`${baseUrl}/api/createSurvey`,{numberOfQuestions:validatedInputs.noq, surveyDescription:validatedInputs.desc, surveyName:validatedInputs.name} )
 
 
 const surv = await db.insert(surveys).values({description:validatedInputs.desc, name:validatedInputs.name, noq:validatedInputs.noq, userId:user.id}).returning({surveyId:surveys.id})
-const createdSurveys = await createdSurveysPromise.data as SurveyResultsType
+const createdSurveys = {results:uniqueResults} 
+console.log(createdSurveys);
+
 
     // await api.survey.createSurvey.mutate({numberOfQuestions:validatedInputs.noq, surveyDescription:validatedInputs.desc, surveyName:validatedInputs.name})
     // const createdSurvey = await db.insert(surveys).values({name:validatedInputs.name, description:validatedInputs.desc, noq:validatedInputs.noq, userId:user.id})
@@ -67,6 +105,7 @@ const createdSurveys = await createdSurveysPromise.data as SurveyResultsType
     
     await db.transaction(async(tx) => {
         const insertedResults = createdSurveys.results.map((surv) => {
+            // @ts-ignore
             return {id:surv.id, questionText:surv.questionText}
         })
      
@@ -83,6 +122,7 @@ const createdSurveys = await createdSurveysPromise.data as SurveyResultsType
             answerText: string;
         }[]
         createdSurveys.results.map((result, idx) => {
+            // @ts-ignore
             const opts = result.options.map(op => ({...op,id:uuid(),resultId:allInsertedResults[idx]?.resultId}))
             allOptions = [...allOptions, ...opts]
             return {...result}
