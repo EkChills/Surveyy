@@ -8,7 +8,7 @@ import {v4 as uuid} from 'uuid'
 
 export async function POST (req:NextRequest) {
   const openai = new OpenAI({
-    apiKey: env.OPENAI_API_KEY, // defaults to process.env["OPENAI_API_KEY"]
+    apiKey: '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', // defaults to process.env["OPENAI_API_KEY"]
   })  
   const body = await req.json() as createInputSchemaTypes
   const surveyInputs = createSurveyInputSchema.parse({...body})
