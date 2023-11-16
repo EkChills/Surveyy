@@ -1,5 +1,5 @@
 import { openai } from "@/lib/openai";
-import { type SurveyResultsType,type createInputSchemaTypes, createSurveyInputSchema } from "@/lib/validation/zod-schemas";
+import { SurveyResultsSchema,type SurveyResultsType,type createInputSchemaTypes, createSurveyInputSchema } from "@/lib/validation/zod-schemas";
 import {NextResponse, type NextRequest } from "next/server";
 import {v4 as uuid} from 'uuid'
 
@@ -38,8 +38,8 @@ export async function POST (req:NextRequest) {
         },
       ],
       model: "gpt-3.5-turbo",
-      temperature:1,
-      // max_tokens:100
+      temperature:0.2,
+      max_tokens:100,
     });
     if(!chatCompletion) {
       throw new Error('OpenAI API error');
