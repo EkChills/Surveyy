@@ -76,7 +76,7 @@ try {
           },
         ],
         model: "gpt-3.5-turbo",
-        temperature:2,
+        temperature:1.2,
       });
       if(!chatCompletion) {
         throw new Error('OpenAI API error');
