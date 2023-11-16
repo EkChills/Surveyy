@@ -1,3 +1,8 @@
+export const runtime = 'edge'; 
+export const dynamic = 'force-dynamic'; 
+
+
+
 import { openai } from "@/lib/openai";
 import { SurveyResultsSchema,type SurveyResultsType,type createInputSchemaTypes, createSurveyInputSchema } from "@/lib/validation/zod-schemas";
 import {NextResponse, type NextRequest } from "next/server";
