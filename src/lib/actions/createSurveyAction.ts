@@ -54,14 +54,9 @@ try {
 
 
 
-
 const createdSurveysPromise = await axios.post(`https://surveyy.vercel.app/api/createSurvey`,{numberOfQuestions:validatedInputs.noq, surveyDescription:validatedInputs.desc, surveyName:validatedInputs.name} )
-if(!createdSurveysPromise) {
-    return {
-        ...initialSurveyState,
-        success:false
-    }
-}
+
+
 const surv = await db.insert(surveys).values({description:validatedInputs.desc, name:validatedInputs.name, noq:validatedInputs.noq, userId:user.id}).returning({surveyId:surveys.id})
 const createdSurveys = await createdSurveysPromise.data as SurveyResultsType
 
