@@ -3,14 +3,15 @@ import { SurveyResultsSchema,type SurveyResultsType,type createInputSchemaTypes,
 import {NextResponse, type NextRequest } from "next/server";
 import {v4 as uuid} from 'uuid'
 
-export const maxDuration = 20; 
+export const maxDuration = 10; 
+export const runtime = 'edge'
 
 
 export async function POST (req:NextRequest) {
   console.log('triggered');
   
   const body = await req.json() as createInputSchemaTypes
-  const surveyInputs = createSurveyInputSchema.parse({...body})
+  // const surveyInputs = createSurveyInputSchema.parse({...body})
   try {
     const chatCompletion = await openai.chat.completions.create({
       messages: [
@@ -34,7 +35,7 @@ export async function POST (req:NextRequest) {
          {
           role: "user",
           content:
-            `{"surveyName":${surveyInputs.surveyName}, "surveyDescription":${surveyInputs.surveyDescription}, "numberOfQuestions":${surveyInputs.numberOfQuestions}}`,
+            `{"surveyName":${body.surveyName}, "surveyDescription":${body.surveyDescription}, "numberOfQuestions":${body.numberOfQuestions}}`,
         },
       ],
       model: "gpt-3.5-turbo",
@@ -46,9 +47,9 @@ export async function POST (req:NextRequest) {
     }
     const parsableJson = chatCompletion?.choices[0]!.message.content
     const parsed = JSON.parse(parsableJson!) as {results:SurveyResultsType[]};
-    const validatedResults = SurveyResultsSchema.parse(parsed)
-    const uniqueResults = validatedResults.results.map((res) => ({...res, id:uuid()}))
-    console.log(validatedResults);
+    // const validatedResults = SurveyResultsSchema.parse(parsed)
+    const uniqueResults = parsed.results.map((res) => ({...res, id:uuid()}))
+    console.log(uniqueResults);
     return NextResponse.json({results:uniqueResults})
     
 
