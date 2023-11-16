@@ -1,5 +1,7 @@
 "use server"
 
+export const runtime = "edge"
+
 import { ZodError } from "zod";
 import { CreateSurveySchema, type SurveyResultsType, initialSurveyState, SurveyResultsSchema } from "../validation/zod-schemas";
 import { db } from "@/server/db";
@@ -76,7 +78,7 @@ try {
           },
         ],
         model: "gpt-3.5-turbo",
-        temperature:1.2,
+        temperature:1,
       });
       if(!chatCompletion) {
         throw new Error('OpenAI API error');
