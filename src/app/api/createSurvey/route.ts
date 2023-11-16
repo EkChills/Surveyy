@@ -1,3 +1,4 @@
+import { env } from "@/env.mjs";
 import { SurveyResultsSchema,type SurveyResultsType,type createInputSchemaTypes, createSurveyInputSchema } from "@/lib/validation/zod-schemas";
 import {NextResponse, type NextRequest } from "next/server";
 import OpenAI from "openai";
@@ -7,7 +8,7 @@ import {v4 as uuid} from 'uuid'
 
 export async function POST (req:NextRequest) {
   const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY, // defaults to process.env["OPENAI_API_KEY"]
+    apiKey: env.OPENAI_API_KEY, // defaults to process.env["OPENAI_API_KEY"]
   })  
   const body = await req.json() as createInputSchemaTypes
   const surveyInputs = createSurveyInputSchema.parse({...body})
