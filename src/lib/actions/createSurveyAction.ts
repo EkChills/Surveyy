@@ -1,7 +1,7 @@
 "use server"
 
 import { ZodError } from "zod";
-import { CreateSurveySchema, type SurveyResultsType, initialSurveyState } from "../validation/zod-schemas";
+import { CreateSurveySchema, type SurveyResultsType, initialSurveyState, SurveyResultsSchema } from "../validation/zod-schemas";
 import { db } from "@/server/db";
 import { options, results, surveys } from "@/server/db/schema";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
@@ -85,8 +85,8 @@ try {
       console.log(parsableJson);
       
       const parsed = JSON.parse(parsableJson!) as {results:SurveyResultsType[]};
-      // const validatedResults = SurveyResultsSchema.parse(parsed)
-      const uniqueResults = parsed.results.map((res) => ({...res, id:uuid()}))
+      const validatedResults = SurveyResultsSchema.parse(parsed)
+      const uniqueResults = validatedResults.results.map((res) => ({...res, id:uuid()}))
       
 
 
@@ -105,7 +105,6 @@ console.log(createdSurveys);
     
     await db.transaction(async(tx) => {
         const insertedResults = createdSurveys.results.map((surv) => {
-            // @ts-ignore
             return {id:surv.id, questionText:surv.questionText}
         })
      
@@ -122,7 +121,6 @@ console.log(createdSurveys);
             answerText: string;
         }[]
         createdSurveys.results.map((result, idx) => {
-            // @ts-ignore
             const opts = result.options.map(op => ({...op,id:uuid(),resultId:allInsertedResults[idx]?.resultId}))
             allOptions = [...allOptions, ...opts]
             return {...result}
