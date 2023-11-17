@@ -43,7 +43,7 @@ export default function CreateSurveyForm() {
       // if(state.success) {
       //   // router.push(`/dashboard/overview/${state.surveyId}`)
       // }
-      if(state) {
+      if(state.success) {
         setProceed(true)
       }
     },[state])
