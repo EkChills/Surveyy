@@ -95,52 +95,52 @@ try {
 // const createdSurveysPromise = await axios.post(`${baseUrl}/api/createSurvey`,{numberOfQuestions:validatedInputs.noq, surveyDescription:validatedInputs.desc, surveyName:validatedInputs.name} )
 
 
-const surv = await db.insert(surveys).values({description:validatedInputs.desc, name:validatedInputs.name, noq:validatedInputs.noq, userId:user.id}).returning({surveyId:surveys.id})
-const createdSurveys = {results:uniqueResults} 
-console.log(createdSurveys);
+// const surv = await db.insert(surveys).values({description:validatedInputs.desc, name:validatedInputs.name, noq:validatedInputs.noq, userId:user.id}).returning({surveyId:surveys.id})
+// const createdSurveys = {results:uniqueResults} 
+// console.log(createdSurveys);
 
 
-    // await api.survey.createSurvey.mutate({numberOfQuestions:validatedInputs.noq, surveyDescription:validatedInputs.desc, surveyName:validatedInputs.name})
-    // const createdSurvey = await db.insert(surveys).values({name:validatedInputs.name, description:validatedInputs.desc, noq:validatedInputs.noq, userId:user.id})
-    // console.log(createdSurvey);
+//     // await api.survey.createSurvey.mutate({numberOfQuestions:validatedInputs.noq, surveyDescription:validatedInputs.desc, surveyName:validatedInputs.name})
+//     // const createdSurvey = await db.insert(surveys).values({name:validatedInputs.name, description:validatedInputs.desc, noq:validatedInputs.noq, userId:user.id})
+//     // console.log(createdSurvey);
     
     
-    await db.transaction(async(tx) => {
-        const insertedResults = createdSurveys.results.map((surv) => {
-            return {id:surv.id, questionText:surv.questionText}
-        })
+//     await db.transaction(async(tx) => {
+//         const insertedResults = createdSurveys.results.map((surv) => {
+//             return {id:surv.id, questionText:surv.questionText}
+//         })
      
-          const allInsertedResults = await tx.insert(results).values(insertedResults.map(res => ({...res, surveyId:surv[0]?.surveyId}))).returning({
-            resultId:results.id
-          });
+//           const allInsertedResults = await tx.insert(results).values(insertedResults.map(res => ({...res, surveyId:surv[0]?.surveyId}))).returning({
+//             resultId:results.id
+//           });
         
 
-        // const allResults = await tx.query.results.findMany({
-        //    where:eq(results.surveyId,surv[0]!.surveyId ) 
-        // })
-        let allOptions = [] as {
-            id: string;
-            answerText: string;
-        }[]
-        createdSurveys.results.map((result, idx) => {
-            const opts = result.options.map(op => ({...op,id:uuid(),resultId:allInsertedResults[idx]?.resultId}))
-            allOptions = [...allOptions, ...opts]
-            return {...result}
-        })
-        console.log(allOptions);
+//         // const allResults = await tx.query.results.findMany({
+//         //    where:eq(results.surveyId,surv[0]!.surveyId ) 
+//         // })
+//         let allOptions = [] as {
+//             id: string;
+//             answerText: string;
+//         }[]
+//         createdSurveys.results.map((result, idx) => {
+//             const opts = result.options.map(op => ({...op,id:uuid(),resultId:allInsertedResults[idx]?.resultId}))
+//             allOptions = [...allOptions, ...opts]
+//             return {...result}
+//         })
+//         console.log(allOptions);
         
-        await tx.insert(options).values(allOptions)
+//         await tx.insert(options).values(allOptions)
         
        
-    })
+//     })
     
-    console.log(createdSurveys);
+//     console.log(createdSurveys);
     
 
     return {
         ...initialSurveyState,
         success:true,
-        surveyId:surv[0]?.surveyId
+        // surveyId:surv[0]?.surveyId
     }
 } catch (error) {
     console.log(error);
