@@ -4,6 +4,7 @@ import {NextResponse, type NextRequest } from "next/server";
 import {v4 as uuid} from 'uuid'
 
 export const runtime = "edge"
+export const maxDuration = 20
 
 export async function POST (req:NextRequest) {
   console.log('triggered');
