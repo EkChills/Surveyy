@@ -24,9 +24,9 @@ export async function POST (req:NextRequest) {
             } \n \n and you should reply with the survey questions with arrays  of the stringified questions like this: \n {results: [
               {
                   "id":"should be a random string id",
-                  "questionText":"question text",
+                  "qt":"question text",
                   "options":[
-                      {"id":"random id", "answerText":"string of the option text"}
+                      {"id":"random id", "at":"string of the option text"}
                   ],
               }
             ] } \n the length of the results array can be more depending on the number of questions value from the user.  make sure the questions are exactly the number of questions provided by the user and when i run JSON.parse it must parse correctly. dont add any string literals that would cause this error to show  unterminated string literal at line 1 column 420 of the JSON data `,
