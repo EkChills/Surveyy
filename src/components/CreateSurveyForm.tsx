@@ -15,7 +15,7 @@ export default function CreateSurveyForm() {
     const searchParams = useSearchParams()
     const [state, formAction] = useFormState(createSurveyAction, initialSurveyState)
     const [formInputs, setFormInputs] = useState<{name:string; desc:string; noq:string;}>({desc:'', name:'', noq:''})
-    const pathname = usePathname()
+    // const pathname = usePathname()
     const router = useRouter()
 
     function handleChange(e:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
