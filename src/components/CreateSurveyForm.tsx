@@ -9,10 +9,12 @@ import { experimental_useFormState as useFormState } from 'react-dom'
 import {  createSurveyAction } from '@/lib/actions/createSurveyAction'
 import { initialSurveyState } from '@/lib/validation/zod-schemas'
 import CreateSurveyButton from './CreateSurveyButton'
+import { Button } from './ui/button'
 
 
 export default function CreateSurveyForm() {
     const searchParams = useSearchParams()
+    const [proceed, setProceed] = useState<boolean>(false)
     const [state, formAction] = useFormState(createSurveyAction, initialSurveyState)
     const [formInputs, setFormInputs] = useState<{name:string; desc:string; noq:string;}>({desc:'', name:'', noq:''})
     const pathname = usePathname()
@@ -39,7 +41,7 @@ export default function CreateSurveyForm() {
 
     useEffect(() => {
       if(state.success) {
-        router.push(`/dashboard/overview/${state.surveyId}`)
+        setProceed(true)
       }
     },[state])
     
@@ -99,6 +101,7 @@ export default function CreateSurveyForm() {
     {state.noq?.error && <span className='text-sm text-red-700'>{state.noq.message}</span>}
     </div>
   <CreateSurveyButton />
+  {proceed && <Button className='w-full font-semibold mt-4'>Proceed</Button>}
   </form>
   )
 }
