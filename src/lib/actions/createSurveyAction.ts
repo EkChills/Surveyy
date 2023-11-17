@@ -1,6 +1,5 @@
 "use server"
 
-export const runtime = "edge"
 
 import { ZodError } from "zod";
 import { CreateSurveySchema, type SurveyResultsType, initialSurveyState, SurveyResultsSchema } from "../validation/zod-schemas";
