@@ -4,7 +4,7 @@ import {NextResponse, type NextRequest } from "next/server";
 import {v4 as uuid} from 'uuid'
 
 export const runtime = "edge"
-export const dynamic = 'force-dynamic';
+// export const dynamic = 'force-dynamic';
 export const maxDuration = 30
 
 export async function POST (req:NextRequest) {
@@ -56,5 +56,6 @@ export async function POST (req:NextRequest) {
   } catch (error) {
     console.log(error);
    return new NextResponse(JSON.stringify(error), {status:500}) 
+   
   }
 }
