@@ -18,8 +18,11 @@ type AllSurveysType = {
 type SurveyAnswerLayoutProps = {
     creatorImage:string;
     allSurveyResults:AllSurveysType
+    surveyTitle:string;
+    surveyDescription:string;
+    creatorName:string;
 }
-export default function SurveyAnswerLayout({allSurveyResults , creatorImage}:SurveyAnswerLayoutProps) {
+export default function SurveyAnswerLayout({allSurveyResults , creatorImage, surveyTitle, surveyDescription, creatorName}:SurveyAnswerLayoutProps) {
     // const [surveys, setSurveys] = useState<AllSurveysType>(allSurveys)
     // const [currentSurveyIndex, setCurrentSurveyIndex] = useState<number>(0)
     const {setAllSurveys, allSurveys, currentSurveyIndex} = useSurveyContext()
@@ -31,7 +34,7 @@ export default function SurveyAnswerLayout({allSurveyResults , creatorImage}:Sur
   return (
     <div className='flex flex-col xl:flex-row min-h-[100lvh]'>
             <div className='hidden xl:block bg-white px-8 pt-[13rem] min-w-[25rem] border-r shadow-md'>
-                <SurveySidePanel creatorImage={creatorImage} />
+                <SurveySidePanel creatorImage={creatorImage} creatorName={creatorName} surveyTitle={surveyTitle} surveyDescription={surveyDescription} />
             </div>
             <div>
                 <SurveyQuestion currentSurvey={allSurveyResults[currentSurveyIndex]!} surveyIndex={currentSurveyIndex} totalSurveys={allSurveys.length} />

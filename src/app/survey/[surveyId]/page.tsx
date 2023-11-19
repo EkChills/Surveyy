@@ -19,6 +19,8 @@ export default async function SurveysPage({params}:{params:{surveyId:string}}) {
 const survey = await db.select().from(surveys).where(eq(surveys.id, params.surveyId))
 const userId = survey[0]?.userId
 const userImage = await db.select().from(user).where(eq(user.id, userId!))
+console.log(userImage);
+
 const allSurveys:AllSurveysType = await db.query.results.findMany({
     where:eq(results.surveyId, params.surveyId),
     with:{
@@ -32,7 +34,7 @@ const allSurveys:AllSurveysType = await db.query.results.findMany({
   return (
     <main className='bg-[#FCFBFC]'>
         <SurveyContextProvider>
-        <SurveyAnswerLayout allSurveyResults={allSurveys} creatorImage={userImage[0]!.picture!} />
+        <SurveyAnswerLayout allSurveyResults={allSurveys} creatorName={userImage[0]!.givenName! + " " + userImage[0]!.familyName!} surveyTitle={survey[0]!.name!} surveyDescription={survey[0]!.description!} creatorImage={userImage[0]!.picture!} />
 
         </SurveyContextProvider>
     </main>
