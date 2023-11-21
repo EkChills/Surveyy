@@ -9,6 +9,8 @@ import SurveyQuestion from './SurveyQuestion';
 type AllSurveysType = {
     id: string;
     questionText: string | null;
+    surveyId:string | null;
+    resultId?:string | null;
     options?: {
       id: string;
       answerText: string;

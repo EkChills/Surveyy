@@ -9,11 +9,15 @@ import React from 'react'
 type AllSurveysType = {
     id: string;
     questionText: string | null;
+    surveyId:string | null
+    resultId:string | null;
     options?: {
       id: string;
       answerText: string;
     }[]
   }[]
+
+  
 
 export default async function SurveysPage({params}:{params:{surveyId:string}}) {
 const survey = await db.select().from(surveys).where(eq(surveys.id, params.surveyId))
@@ -21,12 +25,14 @@ const userId = survey[0]?.userId
 const userImage = await db.select().from(user).where(eq(user.id, userId!))
 console.log(userImage);
 
-const allSurveys:AllSurveysType = await db.query.results.findMany({
+const allSurveys = await db.query.results.findMany({
     where:eq(results.surveyId, params.surveyId),
     with:{
         options:true
     }
 }) 
+console.log(allSurveys);
+
 
 
 

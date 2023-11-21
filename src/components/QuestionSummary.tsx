@@ -24,12 +24,19 @@ type QuestionSummaryProps = {
   surveyId:string | null;
   options:{ id: string,
   resultId: string,
-  answerText: string}[]
+  answerText: string}[],
+  answeredQuestions: {
+    surveyId: string | null;
+    resultId:string | null;
+    id: string;
+    userId: string | null;
+    optionId: string | null;
+}[]
 }
 
-export async function QuestionSummary({questionNo, questionText, id, surveyId, options}:QuestionSummaryProps) {
-  const answeredQuestions = await db.select().from(answered).where(eq(answered.surveyId, id))
+export function QuestionSummary({questionNo, questionText, id, surveyId, options, answeredQuestions}:QuestionSummaryProps) {
   console.log(answeredQuestions);
+  const totalVotes = answeredQuestions.filter((ans) => ans.resultId === id)
   // E9E8ED
   // 07132D
   return (
@@ -44,11 +51,11 @@ export async function QuestionSummary({questionNo, questionText, id, surveyId, o
           {options.map((option) => {
             const totalOptions = answeredQuestions.length
             const numberAnswered = answeredQuestions.filter((ans) => ans.optionId === option.id).length
-            const percentAnswered = Math.floor(((numberAnswered / totalOptions) * 100))
+            const percentAnswered = Math.floor(((numberAnswered / totalVotes.length) * 100))
             return <div key={option.id} className="flex flex-col mt-4">
               <div className="w-full flex items-center justify-between">
               <span className="text-base text-[#07132D] font-semibold">{option.answerText}</span>
-              <span className="text-base text-black font-semibold">{percentAnswered}%</span>
+              <span className="text-base text-black font-semibold">{percentAnswered ? percentAnswered + '%' : '0%' }</span>
               </div>
               <span className="w-full rounded-lg h-[5px] mt-4 bg-[#E9E8ED]"></span>
             </div>
@@ -56,7 +63,7 @@ export async function QuestionSummary({questionNo, questionText, id, surveyId, o
         </Card>   
         <div className="flex flex-col gap-4 mt-6">
           <span className="text-base font-semibold text-[#343549]">Stats</span>
-          <DashboardCard content={answeredQuestions.length} footer="0% change from yesterday" header="Total votes"  />
+          <DashboardCard content={totalVotes.length || 0} footer="0% change from yesterday" header="Total votes"  />
         </div>
       </SheetContent>
     </Sheet>

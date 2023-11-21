@@ -11,6 +11,7 @@ import {
 type AllSurveysType = {
   id: string;
   questionText: string | null;
+  surveyId:string | null;
   options?: {
     id: string;
     answerText: string;
@@ -22,8 +23,8 @@ export type SurveyContextTypes = {
   currentSurveyIndex: number;
   setCurrentSurveyIndex: Dispatch<SetStateAction<number>>;
   setAllSurveys: Dispatch<SetStateAction<AllSurveysType>>;
-  answeredSurveys:{id:string; userId:string; optionId:string; surveyId:string;}[]
-  setAnsweredSurveys:Dispatch<SetStateAction<{id:string; userId:string; optionId:string; surveyId:string;}[]>>
+  answeredSurveys:{id:string; userId:string; optionId:string; surveyId:string | null; resultId:string | null;}[]
+  setAnsweredSurveys:Dispatch<SetStateAction<{id:string; userId:string; optionId:string; surveyId:string | null; resultId:string;}[]>>
 };
 
 export const SurveyContext = createContext<SurveyContextTypes>({
@@ -46,7 +47,7 @@ export const SurveyContextProvider = ({
 }: React.PropsWithChildren) => {
   const [allSurveys, setAllSurveys] = useState<AllSurveysType>([]);
   const [currentSurveyIndex, setCurrentSurveyIndex] = useState<number>(0);
-  const [answeredSurveys, setAnsweredSurveys] = useState<{id:string; userId:string; optionId:string; surveyId:string;}[]>([])
+  const [answeredSurveys, setAnsweredSurveys] = useState<{id:string; userId:string; optionId:string; surveyId:string | null; resultId:string;}[]>([])
   return (
     <SurveyContext.Provider
       value={{

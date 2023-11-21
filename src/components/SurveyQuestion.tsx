@@ -10,6 +10,7 @@ interface SurveyQuestionProps {
     currentSurvey:{
         id: string;
         questionText: string | null;
+        surveyId:string | null;
         options?: {
             id: string;
             answerText: string;
@@ -19,14 +20,22 @@ interface SurveyQuestionProps {
     surveyIndex:number;
     creatorId:string;
 }
+
+type CompleteSurveys = {
+    id: string;
+    userId: string;
+    optionId: string;
+    surveyId: string;
+    resultId: string;
+}[]
 export default function SurveyQuestion({currentSurvey, surveyIndex, totalSurveys, creatorId}:SurveyQuestionProps) {
     const [currentlySelected, setCurrentlySelected] = useState<string>('')
     const {setCurrentSurveyIndex, currentSurveyIndex, setAnsweredSurveys,answeredSurveys} = useSurveyContext()
-    let allSurveyAnswers:typeof answeredSurveys
+    let allSurveyAnswers:CompleteSurveys
     
     function nextSurvey() {
         
-        setAnsweredSurveys(prev => [...prev, {id:uuid(), optionId:currentlySelected, userId:creatorId, surveyId:currentSurvey.id}])
+        setAnsweredSurveys(prev => [...prev, {id:uuid(), optionId:currentlySelected, userId:creatorId, resultId:currentSurvey.id, surveyId:currentSurvey.surveyId}])
         setCurrentSurveyIndex((prev) => {
             if(prev + 1 >= totalSurveys) {
                 return prev
@@ -51,8 +60,8 @@ export default function SurveyQuestion({currentSurvey, surveyIndex, totalSurveys
         {currentSurveyIndex + 1 < totalSurveys && <Button className='font-semibold mt-8 py-[1.5rem]' onClick={nextSurvey} size={'lg'}>Continue</Button>}
         {currentSurveyIndex + 1 >= totalSurveys && <Button onClick={() => {
             setAnsweredSurveys(prev => {
-                const updatedSnapshot = [...prev, {id:uuid(), optionId:currentlySelected, userId:creatorId, surveyId:currentSurvey.id,}]
-                allSurveyAnswers = updatedSnapshot
+                const updatedSnapshot = [...prev, {id:uuid(), optionId:currentlySelected, userId:creatorId, resultId:currentSurvey.id, surveyId:currentSurvey.surveyId}]
+                allSurveyAnswers = updatedSnapshot as CompleteSurveys
                 return updatedSnapshot
             })
             handleSubmit(allSurveyAnswers)

@@ -22,6 +22,7 @@ export const surveyRouter = createTRPCRouter({
       id:z.string(),
       optionId:z.string(),
       userId:z.string(),
+      resultId:z.string(),
       surveyId:z.string(),
     }))).mutation(async({ctx, input}) => {
       await ctx.db.insert(answered).values([...input])

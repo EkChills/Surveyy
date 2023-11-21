@@ -39,6 +39,7 @@ export const answered = pgTable('answered', {
   id:text('id').primaryKey(),
   optionId:text('option_id').references(()=>options.id),
   userId:text('user_id').references(()=>user.id),
+  resultId:text('result_id').references(() => results.id),
   surveyId:text('survey_id')
 })
 
