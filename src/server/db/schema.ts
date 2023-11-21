@@ -32,8 +32,16 @@ export const results = pgTable('surveyResults',{
 export const options = pgTable('options', {
   id:text('id').primaryKey(),
   resultId:text('result_id').references(() => results.id),
-  answerText:varchar('answer_text', {length:256})
+  answerText:varchar('answer_text', {length:256}),
 })
+
+export const answered = pgTable('answered', {
+  id:text('id').primaryKey(),
+  optionId:text('option_id').references(()=>options.id),
+  userId:text('user_id').references(()=>user.id),
+  surveyId:text('survey_id')
+})
+
 
 export const userRelations = relations(user, ({many}) => ({
   surveys:many(surveys)

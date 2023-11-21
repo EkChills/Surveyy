@@ -8,6 +8,48 @@
       "when": 1700037107752,
       "tag": "0000_yellow_beast",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1700466871261,
+      "tag": "0001_mixed_cyclops",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1700481067850,
+      "tag": "0002_brown_white_queen",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1700486961063,
+      "tag": "0003_wooden_metal_master",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1700487371760,
+      "tag": "0004_overconfident_morlun",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1700488043130,
+      "tag": "0005_gifted_quicksilver",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1700490486578,
+      "tag": "0006_watery_blacklash",
+      "breakpoints": true
     }
   ]
 }

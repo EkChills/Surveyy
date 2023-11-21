@@ -22,6 +22,8 @@ export type SurveyContextTypes = {
   currentSurveyIndex: number;
   setCurrentSurveyIndex: Dispatch<SetStateAction<number>>;
   setAllSurveys: Dispatch<SetStateAction<AllSurveysType>>;
+  answeredSurveys:{id:string; userId:string; optionId:string; surveyId:string;}[]
+  setAnsweredSurveys:Dispatch<SetStateAction<{id:string; userId:string; optionId:string; surveyId:string;}[]>>
 };
 
 export const SurveyContext = createContext<SurveyContextTypes>({
@@ -33,6 +35,10 @@ export const SurveyContext = createContext<SurveyContextTypes>({
   setCurrentSurveyIndex: () => {
     return
   },
+  answeredSurveys:[],
+  setAnsweredSurveys:() => {
+    return
+  }
 });
 
 export const SurveyContextProvider = ({
@@ -40,6 +46,7 @@ export const SurveyContextProvider = ({
 }: React.PropsWithChildren) => {
   const [allSurveys, setAllSurveys] = useState<AllSurveysType>([]);
   const [currentSurveyIndex, setCurrentSurveyIndex] = useState<number>(0);
+  const [answeredSurveys, setAnsweredSurveys] = useState<{id:string; userId:string; optionId:string; surveyId:string;}[]>([])
   return (
     <SurveyContext.Provider
       value={{
@@ -47,6 +54,8 @@ export const SurveyContextProvider = ({
         currentSurveyIndex,
         setAllSurveys,
         setCurrentSurveyIndex,
+        answeredSurveys,
+        setAnsweredSurveys
       }}
     >
       {children}

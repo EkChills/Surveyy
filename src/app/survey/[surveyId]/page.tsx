@@ -32,9 +32,9 @@ const allSurveys:AllSurveysType = await db.query.results.findMany({
 
 
   return (
-    <main className='bg-[#FCFBFC]'>
+    <main className='bg-[#FCFBFC] w-full'>
         <SurveyContextProvider>
-        <SurveyAnswerLayout allSurveyResults={allSurveys} creatorName={userImage[0]!.givenName! + " " + userImage[0]!.familyName!} surveyTitle={survey[0]!.name!} surveyDescription={survey[0]!.description!} creatorImage={userImage[0]!.picture!} />
+        <SurveyAnswerLayout allSurveyResults={allSurveys} creatorName={userImage[0]!.givenName! + " " + userImage[0]!.familyName!} surveyTitle={survey[0]!.name!} surveyDescription={survey[0]!.description!} creatorImage={userImage[0]!.picture!} creatorId={userImage[0]!.id!} />
 
         </SurveyContextProvider>
     </main>
