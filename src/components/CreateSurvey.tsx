@@ -7,7 +7,7 @@ import Link from 'next/link'
 
 export default function CreateSurvey() {
   return (
-    <div className='basis-[28rem] mt-[6.3rem]'>
+    <div className='basis-[28rem] mt-6 md:mt-[6.3rem]'>
     <Card className='p-6 flex items-center flex-col'>
       <span className={cn(buttonVariants(), 'w-[3.25rem] h-[3.25rem] flex items-center justify-center p-2 rounded-full')}>
       <Rocket className='' />
