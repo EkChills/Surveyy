@@ -1,7 +1,7 @@
 import { openai } from "@/lib/openai";
 import { createTRPCRouter, privateProcedure, publicProcedure } from "../trpc";
 import {z} from 'zod'
-import { answered, results } from "@/server/db/schema";
+import { answered, options, results } from "@/server/db/schema";
 import { eq } from "drizzle-orm";
 
 interface ResOut {
@@ -29,6 +29,25 @@ export const surveyRouter = createTRPCRouter({
       return {
         success:true
       }
+    }),
+    saveSurveyQuestion:privateProcedure.input(z.object({
+      surveyId:z.string(),
+      id:z.string(),
+      questionText:z.string(),
+      options:z.array(z.object({
+        id:z.string(),
+        answerText:z.string(),
+        resultId:z.string()
+      }))
+    })).mutation(async ({ctx, input}) => {
+      console.log(input.questionText);
+      
+      await ctx.db.transaction(async(tx) => {
+        await tx.update(results).set({id:input.id, questionText:input.questionText, surveyId:input.surveyId}).where(eq(results.id, input.id))
+        await tx.delete(answered).where(eq(answered.resultId, input.id))
+        await tx.delete(options).where(eq(options.resultId, input.id))
+        await tx.insert(options).values(input.options)
+      })
     })
     
   

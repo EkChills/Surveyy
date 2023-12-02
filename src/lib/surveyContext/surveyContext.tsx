@@ -18,6 +18,17 @@ type AllSurveysType = {
   }[];
 }[];
 
+export type CurrentlyEditingSurveyType =  {
+  surveyId: string | null;
+  id: string;
+  questionText: string | null;
+  options: {
+      id: string;
+      resultId: string;
+      answerText: string;
+  }[];
+}
+
 export type SurveyContextTypes = {
   allSurveys: AllSurveysType;
   currentSurveyIndex: number;
@@ -25,6 +36,8 @@ export type SurveyContextTypes = {
   setAllSurveys: Dispatch<SetStateAction<AllSurveysType>>;
   answeredSurveys:{id:string; userId:string; optionId:string; surveyId:string | null; resultId:string | null;}[]
   setAnsweredSurveys:Dispatch<SetStateAction<{id:string; userId:string; optionId:string; surveyId:string | null; resultId:string;}[]>>
+  currentlyEditingSurvey:CurrentlyEditingSurveyType,
+  setCurrentlyEditingSurvey:Dispatch<SetStateAction<CurrentlyEditingSurveyType>>
 };
 
 export const SurveyContext = createContext<SurveyContextTypes>({
@@ -39,6 +52,15 @@ export const SurveyContext = createContext<SurveyContextTypes>({
   answeredSurveys:[],
   setAnsweredSurveys:() => {
     return
+  },
+  currentlyEditingSurvey:{
+    id:'',
+    options:[],
+    questionText:'',
+    surveyId:''
+  },
+  setCurrentlyEditingSurvey:() => {
+    return
   }
 });
 
@@ -48,6 +70,12 @@ export const SurveyContextProvider = ({
   const [allSurveys, setAllSurveys] = useState<AllSurveysType>([]);
   const [currentSurveyIndex, setCurrentSurveyIndex] = useState<number>(0);
   const [answeredSurveys, setAnsweredSurveys] = useState<{id:string; userId:string; optionId:string; surveyId:string | null; resultId:string;}[]>([])
+  const [currentlyEditingSurvey, setCurrentlyEditingSurvey] = useState<CurrentlyEditingSurveyType>({
+    id:'',
+    options:[],
+    questionText:'',
+    surveyId:''
+  })
   return (
     <SurveyContext.Provider
       value={{
@@ -56,7 +84,9 @@ export const SurveyContextProvider = ({
         setAllSurveys,
         setCurrentSurveyIndex,
         answeredSurveys,
-        setAnsweredSurveys
+        setAnsweredSurveys,
+        currentlyEditingSurvey,
+        setCurrentlyEditingSurvey
       }}
     >
       {children}

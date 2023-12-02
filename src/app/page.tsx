@@ -29,7 +29,7 @@ export default function Home() {
       </nav>
       <div className='flex items-center mt-[6rem] flex-col px-0'>
         <div className='px-4'>
-        <div className='w-full lg:max-w-[32rem] rounded-full bg-[#FEF6F0] min-h-[2.25rem] flex px-6 items-center gap-4 justify-center'>
+        <div className='w-full lg:max-w-[32rem] rounded-full bg-[#FEF6F0] min-h-[2.25rem] flex px-6 items-center gap-4 justify-center py-4'>
         <Sparkles className='w-6 h-6 text-[#DA724C]' />
           <p className='text-base antialiased text-center mx-auto font-semibold text-[#DA724C] my-auto'>Create surveys and understand your responses with AI</p>
         </div>

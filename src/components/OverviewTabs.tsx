@@ -8,6 +8,7 @@ import React, { Suspense } from 'react'
   } from "@/components/ui/tabs"
 
 import Overview from './Overview'
+import Questions from './Questions'
 
 export default function OverviewTabs({surveyId}:{surveyId:string}) {
   return (
@@ -22,6 +23,9 @@ export default function OverviewTabs({surveyId}:{surveyId:string}) {
         <Overview surveyId={surveyId} />
 
         </Suspense>
+       </TabsContent>
+       <TabsContent value='questions'>
+          <Questions surveyId={surveyId} />
        </TabsContent>
       </Tabs>
   )
