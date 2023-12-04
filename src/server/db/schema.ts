@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { pgTable, text,  uuid, varchar, integer } from "drizzle-orm/pg-core";
+import { pgTable, text,  uuid, varchar, integer, timestamp } from "drizzle-orm/pg-core";
  
 
 
@@ -18,7 +18,8 @@ export const surveys = pgTable('surveys', {
   name:varchar('survey_name', {length:255}),
   description:text('description'),
   noq:integer('number_of_questions'),
-  userId:text('user_id').references(() => user.id)
+  userId:text('user_id').references(() => user.id),
+  createdAt:timestamp('createdAt').defaultNow()
 })
 
 
@@ -40,7 +41,8 @@ export const answered = pgTable('answered', {
   optionId:text('option_id').references(()=>options.id),
   userId:text('user_id').references(()=>user.id),
   resultId:text('result_id').references(() => results.id),
-  surveyId:text('survey_id')
+  surveyId:text('survey_id'),
+  createdAt:timestamp('createdAt').defaultNow()
 })
 
 
